@@ -37,7 +37,7 @@ body {
 #container ul {
     list-style-type: none;
     text-align: left;
-    padding-left: 35%;
+    padding-left: 10%;
     margin: 0;
 }
 
@@ -58,7 +58,7 @@ body {
 
 h2 {
     font-size: 28px;
-    color: #fbff57;
+    color: #00ff3d;
     text-shadow: 1px 1px 1px black;
 }
 
@@ -70,7 +70,8 @@ h2 {
 }
 
 #button,
-#button_city {
+#button_city,
+#button_city_voice {
     height: 30px;
     border-radius: 20px;
     font-family: Arial cursive;
@@ -80,7 +81,12 @@ h2 {
     background: rgba(0, 0, 0, 0.5);
     outline: none;
 }
-
+#button_city_voice {
+    color: red;
+    border-radius: 7px;
+    float: right;
+    margin-right: 1rem;
+}
 input {
     height: 28px;
     border-radius: 20px;
@@ -89,3 +95,4 @@ input {
     outline: none;
     text-align: center;
 }
+

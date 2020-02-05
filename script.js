@@ -10,6 +10,7 @@ var wind_speed = document.getElementsByClassName('wind_speed');
 var pressure = document.getElementsByClassName('pressure');
 var button = document.getElementById('button');
 var button_city = document.getElementById('button_city');
+var button_city_voice = document.getElementById('button_city_voice');
 var cityValue = document.querySelector('input');
 var container = document.getElementById('container');
 var containerItem = document.getElementsByClassName('container__item');
@@ -48,7 +49,10 @@ function getRemoteDataByCity(city) {
             displayData(response, 1);
             cityValue.placeholder = 'Enter city';
         })
-        .catch(() => cityValue.placeholder = "Wrong city, try again")
+        .catch(() => {
+            alert("Wrong city, try again")
+            button_city.querySelector('span').innerText = '';
+        });
 }
 
 //display remote data
@@ -69,7 +73,7 @@ function displayData(data, index) {
             containerItem[index].style.backgroundImage = 'url("snow.jpg")';
             break;
         case "Clear":
-            containerItem[index].style.backgroundImage = 'url("clear.jpeg")';
+            containerItem[index].style.backgroundImage = 'url("clear.jpg")';
             break;
     }
 }
@@ -78,7 +82,28 @@ function getValueFromButton() {
     button_city.querySelector('span').innerText = cityValue.value;
 }
 
+function getInputValueFromVoice() {
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    const recognition = new SpeechRecognition();
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+
+    recognition.addEventListener('result', event => {
+        cityValue.value = Array.from(event.results)
+            .map(result => result[0])
+            .map(result => result.transcript)
+            .join('');
+        getValueFromButton();
+    });
+
+    recognition.start();
+
+}
+
 //Initialize click event to get remote data
 button.addEventListener("click", getCurrentPosition);
 button_city.addEventListener("click", getInputValue);
+button_city_voice.addEventListener('click', getInputValueFromVoice);
 cityValue.addEventListener('input', getValueFromButton);
+
